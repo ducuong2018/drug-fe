@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Roboto','Helvetica','Arial','sans-serif';
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+  
+  img {
+    vertical-align: bottom;
+    height: 100%;
+    width: 100%;
+  }
+  
+  nav li::before {
+    content: none;
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: #777;
+  }
+
+  input {
+    height: 100%;
+    width: 100%;
+  }
+  
+  input,
+  select,
+  textarea,
+  button {
+    appearance: none;
+    margin: 0;
+    outline: none;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    padding: 0;
+    color: #383838;
+  }
