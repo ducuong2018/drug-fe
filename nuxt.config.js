@@ -18,7 +18,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-      { rel: 'stylesheet' ,href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;700&display=swap' },
+      { rel: 'stylesheet' ,href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700&display=swap' },
     
     ]
   },
@@ -31,6 +31,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {
+      src:'~plugins/baseFunction.js',
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

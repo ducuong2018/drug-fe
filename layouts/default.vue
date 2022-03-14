@@ -1,6 +1,6 @@
 <template>
   <div class="main-content">
-    <header-component />
+    <header-component class="sticky top-0" />
     <Nuxt class="app" />
     <footer-component/>
   </div>
@@ -18,6 +18,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main-content {
+  position: relative;
   > .app {
     min-width: 1280px;
     background: #f5f5fa;

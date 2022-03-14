@@ -51,7 +51,7 @@ export default {
 <style lang="scss" scoped>
 .header-section {
   z-index: 999;
-  min-width: 1280px;
+  width: 100%;
   > .header {
     position: relative;
     width: 1240px;
