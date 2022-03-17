@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      hidden
+      modal
       overflow-y-auto overflow-x-hidden
       fixed
       right-0
@@ -14,7 +14,27 @@
       md:h-full md:inset-0
     "
   >
-    <div class="login">login</div>
+    <div class="login">
+      <div class="container">
+        <div class="heading">
+          <h4>Xin chào</h4>
+          <p>Đăng nhập hoặc tạo tài khoản</p>
+        </div>
+        <input placeholder="Email" />
+        <input placeholder="Mật khẩu" />
+        <button>Tiếp Tục</button>
+        <p class="register">Đăng ký</p>
+        <div class="social flex flex-col items-center">
+          <span>Hoặc tiếp tục bằng</span>
+          <button class="google">
+            <img
+              src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
+              alt="google"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -23,6 +43,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.modal {
+  background: rgba(0, 0, 0, 0.53);
+}
 .login {
   position: relative;
   inset: 0px;
@@ -32,8 +55,79 @@ export default {
   border-radius: 20px;
   outline: none;
   padding: 0px;
-  width: 800px;
+  width: 500px;
   margin: 80px auto;
-  height: 800px;
+  height: 500px;
+  > .container {
+    padding: 40px 45px 24px;
+    > .heading {
+      margin-bottom: 20px;
+      > h4 {
+        margin: 0px 0px 10px;
+        font-size: 24px;
+        font-weight: 500;
+      }
+      > p {
+        margin: 0px;
+        font-size: 15px;
+      }
+    }
+    > input {
+      width: 100%;
+      padding: 10px 0px;
+      border: none;
+      font-size: 24px;
+      color: rgb(36, 36, 36);
+      outline: none;
+      border-bottom: 1px solid rgb(224, 224, 224);
+    }
+    > button {
+      margin: 30px 0px 10px;
+      outline: none;
+      border-radius: 4px;
+      background: rgb(255, 66, 78);
+      padding: 13px 0px;
+      width: 100%;
+      color: rgb(255, 255, 255);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    > .register {
+      margin: 10px 0px 0px;
+      text-align: center;
+      color: rgb(13, 92, 182);
+      cursor: pointer;
+    }
+    > .social {
+      text-align: center;
+      margin: 20px 0px 0px;
+      di > span {
+        font-size: 15px;
+        color: rgb(120, 120, 120);
+        display: inline-block;
+        background: rgb(255, 255, 255);
+        padding: 0px 20px;
+        position: relative;
+        z-index: 2;
+        &::before {
+          content: "";
+          width: 100%;
+          height: 1px;
+          background: rgb(242, 242, 242);
+          position: absolute;
+          left: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 1;
+        }
+      }
+      > button {
+        margin-top: 12px;
+        height: 58px;
+        width: 58px;
+      }
+    }
+  }
 }
 </style>
