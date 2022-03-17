@@ -34,14 +34,14 @@
           <div class="add-card">
             <div class="quanty"><span>Số lượng</span></div>
             <div class="btn flex">
-              <button class="icon">
+              <button class="icon" @click="removeQuantity">
                 <img
                   src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
                   alt="remove"
                 />
               </button>
-              <input class="input" :value="1" />
-              <button class="icon">
+              <input class="input" :value="quantity" />
+              <button class="icon" @click="addQuantity">
                 <img
                   src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
                   alt="add"
@@ -86,6 +86,7 @@ export default {
     return {
       productDetail: {},
       loading: false,
+      quantity: 1,
     };
   },
   async fetch() {
@@ -97,6 +98,16 @@ export default {
     if (status === 200) {
       this.loading = false;
     }
+  },
+  methods: {
+    removeQuantity() {
+      if (this.quantity > 1) {
+        this.quantity -= 1;
+      }
+    },
+    addQuantity() {
+      this.quantity += 1;
+    },
   },
 };
 </script>

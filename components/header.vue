@@ -40,12 +40,16 @@
         </div>
       </div>
     </div>
+    <login-component />
   </div>
 </template>
-
 <script>
+import LoginComponent from "@/components/login.vue";
 export default {
   name: "HeaderSection",
+  components: {
+    LoginComponent,
+  },
 };
 </script>
 <style lang="scss" scoped>
