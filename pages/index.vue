@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import { getRequest } from "@/plugins/api.js";
 export default {
   name: "IndexPage",
   layout: "default",
@@ -91,17 +90,17 @@ export default {
     };
   },
   async fetch() {
-    const category = await getRequest("category");
+    const category = await this.$getRequest("category");
     this.categories = category.status === 200 ? category.body : [];
     this.categoriesLv1 = this.categories.filter((item) => item.level === 1);
-    const product = await getRequest("products?page=0&size=40");
+    const product = await this.$getRequest("products?page=0&size=40");
     this.products = product.status === 200 ? product.body : [];
     console.log(product.body);
   },
   methods: {
     async loadMoreProducts() {
       this.loading = true;
-      const { status, body } = await getRequest(
+      const { status, body } = await this.$getRequest(
         `products?page=${this.page + 1}&size=10`
       );
       if (status === 200) {

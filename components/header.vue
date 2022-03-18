@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="user-shortcut">
-        <div class="account">
+        <div class="account" @click="isShowLogin = true">
           <img
             class="icon"
             src="	https://salt.tikicdn.com/ts/upload/67/de/1e/90e54b0a7a59948dd910ba50954c702e.png"
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <login-component />
+    <login-component v-show="isShowLogin" @close="closeFormLogin" />
   </div>
 </template>
 <script>
@@ -50,7 +50,17 @@ export default {
   components: {
     LoginComponent,
   },
-};
+  data (){
+    return {
+      isShowLogin: false,
+    }
+  },
+  methods:{ 
+    closeFormLogin() {
+       this.isShowLogin = false;
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .header-section {

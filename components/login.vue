@@ -15,31 +15,64 @@
     "
   >
     <div class="login">
+      <img class="close" 
+      src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" 
+      alt="icon" @click="login">
       <div class="container">
         <div class="heading">
           <h4>Xin chào</h4>
           <p>Đăng nhập hoặc tạo tài khoản</p>
         </div>
-        <input placeholder="Email" />
-        <input placeholder="Mật khẩu" />
-        <button>Tiếp Tục</button>
+        <input placeholder="Email" type="email" v-model="form.email" />
+        <input placeholder="Mật khẩu" type="password" v-model="form.password" />
+        <button @click="login">Đăng nhập</button>
         <p class="register">Đăng ký</p>
         <div class="social flex flex-col items-center">
           <span>Hoặc tiếp tục bằng</span>
-          <button class="google">
+          <button class="google" @click="$emit('close')">
             <img
               src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
               alt="google"
             />
           </button>
+          
         </div>
       </div>
+      
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "LoginComponent",
+  data() {
+return {
+  form: {}
+}
+  },
+  methods:{
+    loginWithGoogle () {
+      console.log(this.$gAuth.signIn);
+      this.$gAuth
+        .signIn()
+        .then(GoogleUser => {
+          // on success do something
+          console.log('GoogleUser', GoogleUser)
+          var userInfo = {
+            loginType: 'google',
+            google: GoogleUser
+          }
+          console.log(userInfo);
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+    },
+   async login(){
+      const {status, body } = await this.$postRequest('login',this.form)
+      console.log(status,body);
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -58,6 +91,15 @@ export default {
   width: 500px;
   margin: 80px auto;
   height: 500px;
+  > .close {
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    z-index: 2;
+    cursor: pointer;
+    right: 12px;
+    top: 12px;
+  }
   > .container {
     padding: 40px 45px 24px;
     > .heading {

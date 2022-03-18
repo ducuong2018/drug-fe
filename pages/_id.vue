@@ -79,7 +79,6 @@
   </div>
 </template>
 <script>
-import { getRequest } from "@/plugins/api.js";
 export default {
   name: "ProductDetailPage",
   data() {
@@ -91,7 +90,7 @@ export default {
   },
   async fetch() {
     this.loading = true;
-    const { status, body } = await getRequest(
+    const { status, body } = await this.$getRequest(
       `products?slug=${this.$route.params.id}`
     );
     this.productDetail = status === 200 ? body : {};

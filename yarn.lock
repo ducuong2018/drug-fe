@@ -7995,6 +7995,11 @@ vue-client-only@^2.0.0:
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.1.0.tgz#1a67a47b8ecacfa86d75830173fffee3bf8a4ee3"
   integrity sha512-vKl1skEKn8EK9f8P2ZzhRnuaRHLHrlt1sbRmazlvsx6EiC3A8oWF8YCBrMJzoN+W3OnElwIGbVjsx6/xelY1AA==
 
+vue-google-oauth2@^1.5.8:
+  version "1.5.8"
+  resolved "https://registry.yarnpkg.com/vue-google-oauth2/-/vue-google-oauth2-1.5.8.tgz#9ed963aaafc1e80a276c195499024f369b02d5c8"
+  integrity sha512-mATpPrLjzjAoUwgFC2feEZEhyoFyItPQSdEgX3m+rHI17sXLEdKzcMLmk+8B1obu4J/YVuVRR9A1afs+4VEk0Q==
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
