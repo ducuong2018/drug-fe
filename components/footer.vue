@@ -4,7 +4,7 @@
       <div class="mb-6 md:mb-0">
         <a href="https://flowbite.com" class="flex items-center">
           <img
-            src="/docs/images/logo.svg"
+            src=""
             class="mr-3 h-8"
             alt="FlowBite Logo"
           />

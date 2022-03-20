@@ -20,7 +20,14 @@
         </button>
       </div>
       <div class="user-shortcut">
-        <div class="account" @click="isShowLogin = true">
+       <div v-if="user.name" class="wrap-user">
+         <div class="icon flex items-center justify-center">{{user.name.slice(0,1)}}</div>
+         <span class="flex flex-col">
+           <span class="label">Tài khoản</span>
+           <span class="name">{{ user.name }} <img class="arrow" src="https://salt.tikicdn.com/ts/upload/d7/d4/a8/34939af2da1ceeeae9f95b7485784233.png"></span>
+         </span>
+         </div>
+        <div v-else class="account" @click="isShowLogin = true">
           <img
             class="icon"
             src="	https://salt.tikicdn.com/ts/upload/67/de/1e/90e54b0a7a59948dd910ba50954c702e.png"
@@ -40,7 +47,11 @@
         </div>
       </div>
     </div>
-    <login-component v-show="isShowLogin" @close="closeFormLogin" />
+    <login-component
+      v-show="isShowLogin"
+      @close="closeFormLogin"
+      @getUserDetail="getUserDetail"
+    />
   </div>
 </template>
 <script>
@@ -50,19 +61,63 @@ export default {
   components: {
     LoginComponent,
   },
-  data (){
+  data() {
     return {
       isShowLogin: false,
+      user: {},
+    };
+  },
+    async created() {
+    if(localStorage.getItem("token")) {
+       const { status, body } = await this.$getRequest("user", true);
+      if (status === 200) {
+        this.user = body;
+      }
     }
   },
-  methods:{ 
+  methods: {
     closeFormLogin() {
-       this.isShowLogin = false;
-    }
-  }
-}
+      this.isShowLogin = false;
+    },
+    async getUserDetail() {
+      const { status, body } = await this.$getRequest("user", true);
+      if (status === 200) {
+        this.isShowLogin = false;
+        this.user = body;
+      }
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
+.wrap-user {
+  cursor: pointer;
+    margin: 0px 0px 0px 16px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    position: relative;
+    width: 162px;
+    > .icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    border-radius: 2px;
+    font-size: 24px;
+    }
+    > .flex {
+      > .name {
+        display: flex;
+        align-items: center;
+        > .arrow {
+          height: 16px;
+          width: 16px;
+        }
+      }
+    }
+}
 .header-section {
   z-index: 999;
   width: 100%;

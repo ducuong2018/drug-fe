@@ -1,16 +1,6 @@
 <template>
   <div class="product-detail">
-    <div class="breakcrumb">
-      <a href="/" class="link">Trang chủ</a>
-      <a
-        v-for="category in productDetail.category"
-        :key="category.id"
-        href="/"
-        class="link"
-      >
-        > {{ category.name }}</a
-      >
-    </div>
+    <break-crumb :categories="productDetail.category" />
     <div v-if="!loading" class="product">
       <div class="header flex">
         <div class="image">
@@ -79,8 +69,10 @@
   </div>
 </template>
 <script>
+import BreakCrumb from "@/components/breakcrumb.vue";
 export default {
   name: "ProductDetailPage",
+  components: { BreakCrumb },
   data() {
     return {
       productDetail: {},
@@ -112,15 +104,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .product-detail {
-  > .breakcrumb {
-    width: 1270px;
-    margin-right: auto;
-    margin-left: auto;
-    padding: 12px 15px;
-  }
-  > .breakcrumb > .link {
-    color: rgb(128, 128, 137);
-  }
   > .product {
     background: #fff;
     max-width: 1240px;

@@ -15,9 +15,12 @@
     "
   >
     <div class="login">
-      <img class="close" 
-      src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png" 
-      alt="icon" @click="login">
+      <img
+        class="close"
+        src="https://salt.tikicdn.com/ts/upload/fe/20/d7/6d7764292a847adcffa7251141eb4730.png"
+        alt="icon"
+        @click="login"
+      />
       <div class="container">
         <div class="heading">
           <h4>Xin chào</h4>
@@ -35,10 +38,8 @@
               alt="google"
             />
           </button>
-          
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -46,33 +47,35 @@
 export default {
   name: "LoginComponent",
   data() {
-return {
-  form: {}
-}
+    return {
+      form: {},
+    };
   },
-  methods:{
-    loginWithGoogle () {
-      console.log(this.$gAuth.signIn);
+  methods: {
+    loginWithGoogle() {
       this.$gAuth
         .signIn()
-        .then(GoogleUser => {
+        .then((GoogleUser) => {
           // on success do something
-          console.log('GoogleUser', GoogleUser)
+          console.log("GoogleUser", GoogleUser);
           var userInfo = {
-            loginType: 'google',
-            google: GoogleUser
-          }
+            loginType: "google",
+            google: GoogleUser,
+          };
           console.log(userInfo);
         })
-        .catch(error => {
-          console.log('error', error)
-        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     },
-   async login(){
-      const {status, body } = await this.$postRequest('login',this.form)
-      console.log(status,body);
-    }
-  }
+    async login() {
+      const { status, body } = await this.$postRequest("login", this.form);
+      if (status === 200) {
+        localStorage.setItem("token", body.token);
+        this.$emit("getUserDetail");
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

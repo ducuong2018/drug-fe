@@ -5,7 +5,7 @@
         <a
           v-for="category in categoriesLv1"
           :key="category.id"
-          :href="category.slug"
+          :href="'danhmuc/' + category.slug"
           class="category"
           >{{ category.name }}</a
         >
@@ -95,7 +95,6 @@ export default {
     this.categoriesLv1 = this.categories.filter((item) => item.level === 1);
     const product = await this.$getRequest("products?page=0&size=40");
     this.products = product.status === 200 ? product.body : [];
-    console.log(product.body);
   },
   methods: {
     async loadMoreProducts() {
@@ -108,7 +107,6 @@ export default {
         this.loading = false;
         this.page += 1;
       }
-      console.log(this.products);
     },
   },
 };
