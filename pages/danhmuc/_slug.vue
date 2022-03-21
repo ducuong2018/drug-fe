@@ -1,18 +1,14 @@
 <template>
-  <div class="index-page">
-    <div class="category-bar">
-      <div class="container flex items-center justify-between">
-        <a
-          v-for="category in categoriesLv1"
-          :key="category.id"
-          :href="'danhmuc/' + category.slug"
-          class="category"
-          >{{ category.name }}</a
-        >
+  <div>
+    <break-crumb :categories="categories" />
+    <div class="container">
+      <div class="category">
+        <h3>Danh mục</h3>
       </div>
+      <product :products="products" class="product" />
     </div>
-    <Product :products="products"/>
-    <div class="view-more">
+
+    <!-- <div class="view-more">
       <button
         class="
           bg-transparent
@@ -58,72 +54,58 @@
         </svg>
         <span v-else>Xem thêm</span>
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
-
 <script>
-import Product from "@/components/product.vue"
+import BreakCrumb from "@/components/breakcrumb.vue";
+import Product from "@/components/product.vue";
 export default {
-  name: "IndexPage",
-  components:{
-    Product
-  },
-  layout: "default",
+  name: "CategoryPage",
+  components: { BreakCrumb, Product },
   data() {
     return {
-      categories: [],
-      categoriesLv1: [],
       products: [],
-      page: 3,
-      loading: false,
+      categories: [],
     };
   },
   async fetch() {
-    const category = await this.$getRequest("category");
-    this.categories = category.status === 200 ? category.body : [];
-    this.categoriesLv1 = this.categories.filter((item) => item.level === 1);
-    const product = await this.$getRequest("products?page=0&size=40");
+    const product = await this.$getRequest(
+      `products?slugCategory=${this.$route.params.slug}&page=0&size=40`
+    );
     this.products = product.status === 200 ? product.body : [];
-  },
-  methods: {
-    async loadMoreProducts() {
-      this.loading = true;
-      const { status, body } = await this.$getRequest(
-        `products?page=${this.page + 1}&size=10`
-      );
-      if (status === 200) {
-        this.products = [...this.products, ...body];
-        this.loading = false;
-        this.page += 1;
-      }
-    },
+    console.log(this.products);
+    const category = await this.$getRequest(
+      `category?slug=${this.$route.params.slug}`
+    );
+    this.categories = category.status === 200 ? category.body : [];
   },
 };
 </script>
 <style lang="scss" scoped>
-.index-page {
-  > .view-more {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-  }
+> .view-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
 }
-.category-bar {
-  background: #fff;
-  height: 44px;
-  > .container {
-    width: 1240px;
-    padding: 15px 0px;
-    margin: 0px auto;
-    position: relative;
-    height: 44px;
+.container {
+  display: flex;
+  width: 100%;
+  > .category {
+    width: 30%;
+    background: #fff;
+    border-right: 1px solid #e5e5e5;
+    > h3 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+      margin: 20px 0 22px 12px;
+      text-align: center;
+    }
   }
-  > .container > .category {
-    font-size: 14px;
-    text-decoration: none;
-    color: rgb(56, 56, 61);
+  > .product {
+    width: 70%;
   }
 }
 </style>

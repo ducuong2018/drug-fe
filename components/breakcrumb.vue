@@ -1,9 +1,15 @@
 <template>
   <div class="breakcrumb">
     <a href="/" class="link">Trang chủ</a>
-    <a v-for="category in categories" :key="category.id" href="/" class="link">
-      > {{ category.name }}</a
-    >
+    <div v-if="categories.length">
+      <div v-for="category in categories" :key="category.id">
+        <span v-if="category.name"> ></span>
+        <a :href="'/danhmuc/' + category.slug"> {{ category.name }}</a>
+      </div>
+    </div>
+    <div v-else>
+      > <a :href="'/danhmuc/' + categories.slug">{{ categories.name }}</a>
+    </div>
   </div>
 </template>
 <script>
@@ -11,8 +17,9 @@ export default {
   name: "BreakCrumb",
   props: {
     categories: {
-        type:Array,
-        default:[]}
+      type: [Object, Array],
+      default: [],
+    },
   },
 };
 </script>
@@ -22,8 +29,8 @@ export default {
   margin-right: auto;
   margin-left: auto;
   padding: 12px 15px;
-  > .link {
-    color: rgb(128, 128, 137);
-  }
+  display: flex;
+  align-items: center;
+  color: rgb(128, 128, 137);
 }
 </style>
