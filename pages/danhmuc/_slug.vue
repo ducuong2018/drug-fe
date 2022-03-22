@@ -1,14 +1,58 @@
 <template>
   <div>
-    <break-crumb :categories="categories" />
+    <break-crumb :categories="categoriesLv1" />
     <div class="container">
       <div class="category">
         <h3>Danh mục</h3>
+        <div v-for="lv2 in categoriesLv2" :key="lv2.id">
+          <div class="item">
+            <a :href="lv2.slug" class="flex items-center">
+              <img :src="lv2.image" alt="image" />
+              {{ lv2.name }}
+            </a>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+          <div v-for="lv3 in categoriesLv3" :key="lv3.id">
+            <a
+              :href="lv3.slug"
+              v-if="lv3.parentId === lv2.id"
+              class="linklv3 flex items-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-2 w-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+              {{ lv3.name }}</a
+            >
+          </div>
+        </div>
       </div>
       <product :products="products" class="product" />
     </div>
-
-    <!-- <div class="view-more">
+    <div v-if="products.length > 1" class="view-more">
       <button
         class="
           bg-transparent
@@ -54,7 +98,7 @@
         </svg>
         <span v-else>Xem thêm</span>
       </button>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -66,7 +110,11 @@ export default {
   data() {
     return {
       products: [],
-      categories: [],
+      categoriesLv1: [],
+      categoriesLv2: [],
+      categoriesLv3: [],
+      loading: false,
+      page: 3,
     };
   },
   async fetch() {
@@ -74,16 +122,35 @@ export default {
       `products?slugCategory=${this.$route.params.slug}&page=0&size=40`
     );
     this.products = product.status === 200 ? product.body : [];
-    console.log(this.products);
     const category = await this.$getRequest(
-      `category?slug=${this.$route.params.slug}`
+      `category_detail?slug=${this.$route.params.slug}`
     );
-    this.categories = category.status === 200 ? category.body : [];
+    this.categoriesLv1 =
+      category.status === 200 ? category.body.categoryLv1 : [];
+    this.categoriesLv2 =
+      category.status === 200 ? category.body.categoryLv2 : [];
+    this.categoriesLv3 =
+      category.status === 200 ? category.body.categoryLv3 : [];
+  },
+  methods: {
+    async loadMoreProducts() {
+      this.loading = true;
+      const { status, body } = await this.$getRequest(
+        `products?slugCategory=${this.$route.params.slug}&page=${
+          this.page + 1
+        }&size=10`
+      );
+      if (status === 200) {
+        this.products = [...this.products, ...body];
+        this.loading = false;
+        this.page += 1;
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-> .view-more {
+.view-more {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,6 +169,20 @@ export default {
       line-height: 32px;
       margin: 20px 0 22px 12px;
       text-align: center;
+    }
+    > div > .item {
+      display: flex;
+      align-items: center;
+    }
+    > div > .item > a > img {
+      height: 52px;
+      width: 52px;
+    }
+    > div > .item > button {
+      margin-left: 12px;
+    }
+    > div > div > .linklv3 {
+      margin-left: 32px;
     }
   }
   > .product {

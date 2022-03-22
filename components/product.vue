@@ -1,5 +1,5 @@
 <template>
-  <div class="list-product">
+  <div v-if="products.length > 1" class="list-product">
     <a
       v-for="product in products"
       :key="product.id"
@@ -14,6 +14,7 @@
       <div class="name">{{ product.name }}</div>
     </a>
   </div>
+  <div v-else>Không tìm thấy sản phẩm</div>
 </template>
 <script>
 export default {
@@ -43,6 +44,7 @@ export default {
     border-radius: 12px;
     box-sizing: border-box;
     width: 270px;
+    height: 350px;
   }
   > .product > .image {
     height: 200px;

@@ -1,7 +1,7 @@
 <template>
   <div class="breakcrumb">
     <a href="/" class="link">Trang chủ</a>
-    <div v-if="categories.length">
+    <div v-if="categories.length" class="chill">
       <div v-for="category in categories" :key="category.id">
         <span v-if="category.name"> ></span>
         <a :href="'/danhmuc/' + category.slug"> {{ category.name }}</a>
@@ -32,5 +32,9 @@ export default {
   display: flex;
   align-items: center;
   color: rgb(128, 128, 137);
+  > .chill {
+    display: flex;
+    align-items: center;
+  }
 }
 </style>
