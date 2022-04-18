@@ -52,22 +52,6 @@ export default {
     };
   },
   methods: {
-    loginWithGoogle() {
-      this.$gAuth
-        .signIn()
-        .then((GoogleUser) => {
-          // on success do something
-          console.log("GoogleUser", GoogleUser);
-          var userInfo = {
-            loginType: "google",
-            google: GoogleUser,
-          };
-          console.log(userInfo);
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    },
     async login() {
       const { status, body } = await this.$postRequest("login", this.form);
       if (status === 200) {

@@ -3,7 +3,7 @@
     <a
       v-for="product in products"
       :key="product.id"
-      :href="'http://localhost:3000/' + product.slug"
+      :href="'/' + product.slug"
       class="product"
     >
       <div class="image">

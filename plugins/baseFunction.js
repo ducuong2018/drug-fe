@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import GAuth from 'vue-google-oauth2';
 import axios from "axios";
 const URL = process.env.URL_API;
 const headers = {};
@@ -20,9 +19,6 @@ Vue.prototype.$getRequest = function (url, isToken = false) {
             }
             )
             .catch(error => {
-                if (error.response.status === 403) {
-                    localStorage.clear("token")
-                }
                 reject(error)
             })
     })
@@ -36,10 +32,3 @@ Vue.prototype.$postRequest = function (url, data, isToken = false) {
         })
     });
 }
-const gauthOption = {
-    clientId: '661541043064-1prr1brmk7rpo8divc1en63kl07d9ale.apps.googleusercontent.com',
-    scope: 'profile email',
-    prompt: 'select_account'
-}
-Vue.use(GAuth, gauthOption)
-

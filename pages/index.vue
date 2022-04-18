@@ -3,7 +3,7 @@
     <div class="category-bar">
       <div class="container flex items-center justify-between">
         <a
-          v-for="category in categoriesLv1"
+          v-for="category in categories"
           :key="category.id"
           :href="'danhmuc/' + category.slug"
           class="category"
@@ -11,7 +11,7 @@
         >
       </div>
     </div>
-    <Product :products="products"/>
+    <product :products="products" />
     <div class="view-more">
       <button
         class="
@@ -63,37 +63,43 @@
 </template>
 
 <script>
-import Product from "@/components/product.vue"
+import Product from "@/components/product.vue";
 export default {
   name: "IndexPage",
-  components:{
-    Product
+  components: {
+    Product,
   },
   layout: "default",
   data() {
     return {
       categories: [],
-      categoriesLv1: [],
       products: [],
       page: 3,
       loading: false,
     };
   },
   async fetch() {
-    const category = await this.$getRequest("category");
-    this.categories = category.status === 200 ? category.body : [];
-    this.categoriesLv1 = this.categories.filter((item) => item.level === 1);
-    const product = await this.$getRequest("products?page=0&size=40");
-    this.products = product.status === 200 ? product.body : [];
+    this.getCategories();
+    this.getProducts();
   },
   methods: {
+    async getCategories() {
+      const { status, body } = await this.$getRequest("category?level=1");
+      this.categories = status === 200 ? body : [];
+    },
+    async getProducts() {
+      const { status, body } = await this.$getRequest(
+        "products?page=0"
+      );
+      this.products = status === 200 ? body.data : [];
+    },
     async loadMoreProducts() {
       this.loading = true;
       const { status, body } = await this.$getRequest(
-        `products?page=${this.page + 1}&size=10`
+        `products?page=${this.page + 1}`
       );
       if (status === 200) {
-        this.products = [...this.products, ...body];
+        this.products = [...this.products, ...body.data];
         this.loading = false;
         this.page += 1;
       }
